@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import User
 from django.contrib.auth.models import Group
-from cart.models import Cart
 
+from .models import User
+from cart.models import Cart
 
 admin.site.unregister(Group)
 
@@ -14,15 +14,15 @@ class CartInline(admin.StackedInline):
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['id', 'email', 'fullname', 'last_login']
-    list_display_links = ['id', 'email', 'fullname', 'last_login']
-    search_fields = ['email', 'fullname']
+    list_display = ['id', 'email', 'full_name', 'last_login']
+    list_display_links = ['id', 'email', 'full_name', 'last_login']
+    search_fields = ['email', 'full_name']
     list_filter = ['is_active', 'is_staff']
     fieldsets = [
         (
             None,
             {
-                "fields": ['email', 'fullname', 'date_joined', 'last_login', 'is_active']
+                "fields": ['email', 'full_name', 'date_joined', 'last_login', 'is_active']
             }
         )
     ]

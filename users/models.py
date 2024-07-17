@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.contrib.auth.hashers import make_password
 
-
 class CustomUserManager(BaseUserManager):
 
     def create(self, **kwargs):
@@ -33,21 +32,20 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(email, password, **kwargs)
 
 
-
-
-
 class User(AbstractUser):
 
     email = models.EmailField("Email", unique=True, null=False, blank=False)
-    fullname = models.CharField("Full name", max_length=100, null=True, blank=True)
+    full_name = models.CharField("Full name", max_length=100, null=True, blank=True)
 
     username = None
     first_name = None
     last_name = None
-    objects = CustomUserManager()
+
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
+
+    objects = CustomUserManager()
 
     def __str__(self):
         return self.email

@@ -1,14 +1,11 @@
 from django.urls import path
+
 from .views import (
     index,
-    get_clothes_by_id,
     get_clothes_by_category,
+    get_clothes_by_id,
     search_clothes,
 )
-
-
-
-
 
 urlpatterns = [
     path('', index, name='index'),

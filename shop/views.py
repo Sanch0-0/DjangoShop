@@ -4,7 +4,6 @@ from django.core.paginator import Paginator
 
 from .models import Category, Clothes
 
-
 # Create your views here.
 def index(request):
 
@@ -12,6 +11,7 @@ def index(request):
 
 
 def search_clothes(request):
+
     search = request.GET.get("search")
     page = request.GET.get("page", 1)
 
@@ -24,18 +24,17 @@ def search_clothes(request):
     clothes = paginator.page(page)
 
     context = {
-        "clothes": clothes,
+        "clothes": clothes
     }
-    return render(request, "search.html", context )
+    return render(request, "search.html", context)
 
 
 def get_clothes_by_category(request, category_id):
+    "Функция фильтрует одежду по категории и возвращает html"
 
-    clothes = Clothes.objects.filter(category__id=category_id)
+    clothes = Clothes.objects.filter(category__id = category_id)
 
     page = request.GET.get("page", 1)
-    if page is None:
-        page = 1
 
     paginator = Paginator(clothes, 20)
     clothes = paginator.page(page)
@@ -43,15 +42,17 @@ def get_clothes_by_category(request, category_id):
     context = {
         "clothes": clothes,
     }
+
     return render(request, "clothes_by_category.html", context)
 
 
 def get_clothes_by_id(request, id):
+    "Функция возвращает одежду по ID"
+
     try:
         clothes = Clothes.objects.get(id=id)
-
     except Clothes.DoesNotExist:
-        return HttpResponseNotFound("Clothes not Found!")
+        return HttpResponseNotFound("Clothes not found")
 
     context = {
         "clothes": clothes

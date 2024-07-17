@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
-from .forms import RegisterForm, LoginForm
-from .models import User
 from django.contrib.auth import login, authenticate, logout
+
+from .models import User
+from .forms import RegisterForm, LoginForm
+
 from cart.models import Cart
 
 def register_view(request):
@@ -36,15 +38,15 @@ def login_view(request):
         form = LoginForm(data=request.POST)
         if form.is_valid():
             user = authenticate(
-            request,
-            email=form.cleaned_data['email'],
-            password=form.cleaned_data['password']
+                request,
+                email=form.cleaned_data['email'],
+                password=form.cleaned_data['password']
             )
             if user is not None:
                 login(request, user)
                 return redirect("index")
             else:
-                message = "Please, try again"
+                message = "Check your data"
 
     context = {
         "form": form,
@@ -60,6 +62,6 @@ def logout_view(request):
 
 
 def logout_commit_view(request):
-
+    
     logout(request)
     return redirect("login")
